@@ -6,7 +6,7 @@ export default function Capture({ mode }: { mode: "screenshot" | "record" }) {
   const [target, setTarget] = useState("area");
   const [audio, setAudio] = useState("none");
   const [format, setFormat] = useState("gif");
-  const [destination, setDestination] = useState("savecopy");
+  const [destination, setDestination] = useState("copy");
   const [delay, setDelay] = useState("0");
   const [status, setStatus] = useState<{phase?: string; elapsed?: number}>({});
   const [error, setError] = useState("");

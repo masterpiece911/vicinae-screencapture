@@ -2,7 +2,7 @@
 
 Use **Screenshot** or **Record Video** in Vicinae. Bind **Print** to **Screen Capture** for a horizontal Screenshot / Screencast chooser. Use Left/Right and Enter to select; Escape goes back. Each entry opens directly with its capture options: an area, a window, the active window, or the current monitor. Screenshots also support all monitors. Press Enter to capture; Escape cancels area/window selection.
 
-Screenshots default to **save and copy**. The Destination option also offers clipboard-only and save-only. PNGs go to `Screenshots` inside the XDG Pictures directory. Recording defaults to area selection and GIF-only output in `~/Videos/Screencasts/` (using the XDG Videos directory). MP4 and MP4+GIF are also available in Format.
+Screenshots default to **clipboard only**. The Destination option also offers save-and-copy and save-only. PNGs go to `Screenshots` inside the XDG Pictures directory. Recording defaults to area selection and GIF-only output in `~/Videos/Screencasts/` (using the XDG Videos directory). MP4 and MP4+GIF are also available in Format.
 
 GIF-only output is silent and removes the temporary MP4 after successful export. MP4 modes offer no audio (default), system audio, or the default microphone. GIF export creates a silent, 15 fps GIF up to 1280 pixels wide. MP4+GIF mode preserves both files. The delay starts after selecting the capture area.
 

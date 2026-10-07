@@ -370,7 +370,7 @@ def main():
     parser.add_argument('command', choices=['screenshot', 'record', 'stop', 'status', 'check'])
     parser.add_argument('--mode', choices=['screenshot', 'record'], default='screenshot')
     parser.add_argument('--target', choices=['area', 'window', 'active', 'output', 'screen'], default='area')
-    parser.add_argument('--destination', choices=['save', 'copy', 'savecopy'], default='savecopy')
+    parser.add_argument('--destination', choices=['save', 'copy', 'savecopy'], default='copy')
     parser.add_argument('--audio', choices=['none', 'system', 'microphone'], default='none')
     parser.add_argument('--delay', type=int, choices=[0, 3, 5, 10], default=0)
     parser.add_argument('--gif', action='store_true')
