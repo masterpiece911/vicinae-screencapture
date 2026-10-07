@@ -10,6 +10,12 @@
   "icon": "icon.svg",
   "commands": [
     {
+      "name": "chooser",
+      "title": "Screen Capture",
+      "description": "Choose Screenshot or Screencast in a horizontal pane",
+      "mode": "view"
+    },
+    {
       "name": "screenshot",
       "title": "Screenshot",
       "description": "Capture an area, window or monitor on Wayland or Xorg",

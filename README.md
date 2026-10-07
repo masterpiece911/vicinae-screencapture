@@ -1,6 +1,6 @@
 # vicinae-screencapture
 
-Use **Screenshot** or **Record Video** in Vicinae. You can bind **Print** to Screenshot using the example below. Each entry opens directly with its capture options: an area, a window, the active window, or the current monitor. Screenshots also support all monitors. Press Enter to capture; Escape cancels area/window selection.
+Use **Screenshot** or **Record Video** in Vicinae. Bind **Print** to **Screen Capture** for a horizontal Screenshot / Screencast chooser. Use Left/Right and Enter to select; Escape goes back. Each entry opens directly with its capture options: an area, a window, the active window, or the current monitor. Screenshots also support all monitors. Press Enter to capture; Escape cancels area/window selection.
 
 Screenshots default to **save and copy**. The Destination option also offers clipboard-only and save-only. PNGs go to `Screenshots` inside the XDG Pictures directory. Recording defaults to area selection and GIF-only output in `~/Videos/Screencasts/` (using the XDG Videos directory). MP4 and MP4+GIF are also available in Format.
 
@@ -17,14 +17,14 @@ npm ci
 npm run build
 ```
 
-Search Vicinae for **Screenshot**, **Record Video**, or **Stop Screen Recording**. Building installs the extension; no server restart is needed.
+Search Vicinae for **Screen Capture**, **Screenshot**, **Record Video**, or **Stop Screen Recording**. Building installs the extension; no server restart is needed.
 
 ## Shortcuts
 
 Optional Sway configuration (replace any existing Print bindings):
 
 ```sway
-bindsym --release Print exec vicinae cmd launch @masterpiece/screen-capture:screenshot
+bindsym --release Print exec vicinae cmd launch @masterpiece/screen-capture:chooser
 bindsym --release Ctrl+Shift+Print exec vicinae cmd launch @masterpiece/screen-capture:stop
 bindsym --release Shift+Print exec grimshot --notify copy screen
 bindsym --release Shift+Alt+Print exec grimshot --notify copy area
@@ -33,7 +33,7 @@ bindsym --release Shift+Alt+Print exec grimshot --notify copy area
 
 | Shortcut | Action |
 | --- | --- |
-| Print | Open Screenshot |
+| Print | Open horizontal Screenshot / Screencast chooser |
 | Ctrl+Shift+Print | Stop and save recording |
 | Shift+Print | Copy all monitors using grimshot |
 | Shift+Alt+Print | Select an area and copy using grimshot |
@@ -62,7 +62,7 @@ Wayland requires Sway, `grimshot`, `grim`, `slurp`, `jq`, `wl-copy`, `wf-recorde
 
 On Ubuntu, install Xorg tools with `sudo apt install maim slop xdotool xclip x11-utils x11-xserver-utils ffmpeg libnotify-bin`. System audio and microphone lookup support either `pactl` (PulseAudio or PipeWire's PulseAudio compatibility service) or `wpctl` (PipeWire). GIF-only needs no audio tools.
 
-On Xorg, Current Monitor uses the active window's center, falling back to the pointer location. Partially off-screen windows are clipped to the desktop. The Vicinae commands work in either session; the example global shortcuts are for Sway only. On another desktop, assign its keyboard shortcuts to `vicinae cmd launch @masterpiece/screen-capture:screenshot` and `vicinae cmd launch @masterpiece/screen-capture:stop`.
+On Xorg, Current Monitor uses the active window's center, falling back to the pointer location. Partially off-screen windows are clipped to the desktop. The Vicinae commands work in either session; the example global shortcuts are for Sway only. On another desktop, assign its keyboard shortcuts to `vicinae cmd launch @masterpiece/screen-capture:chooser` and `vicinae cmd launch @masterpiece/screen-capture:stop`.
 
 Capture interfaces follow [maim/slop](https://github.com/naelstrof/maim) and [FFmpeg's X11 input documentation](https://ffmpeg.org/ffmpeg-devices.html#x11grab).
 
