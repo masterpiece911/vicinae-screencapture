@@ -298,7 +298,7 @@ def record(args):
                     rect = xorg.select_rect(args.target, wait_child, Cancelled)
                 phase = 'Starting'
                 if args.delay:
-                    notify('Recording countdown', f'Starts in {args.delay} seconds. Ctrl+Shift+Print cancels.')
+                    notify('Recording countdown', f'Starts in {args.delay} seconds. On Sway, Super+Print cancels.')
                 pause(args.delay + 0.3)
                 path = filename('VIDEOS', '.mp4')
                 command = (recording_command(output, geom, path, args.audio) if session == 'wayland'
@@ -306,7 +306,7 @@ def record(args):
                 with (RUNTIME / 'recorder.log').open('w') as log:
                     child = subprocess.Popen(command, stdout=log, stderr=log)
                     phase = 'Recording'; started = time.monotonic()
-                    notify('Recording started', 'Ctrl+Shift+Print to stop and save. Open Record Video in Vicinae for recording controls.')
+                    notify('Recording started', 'On Sway, Super+Print stops and saves. Open Record Video in Vicinae for recording controls.')
                     while child.poll() is None and not stop:
                         events(); time.sleep(0.1)
                     if child.poll() is None:

@@ -25,7 +25,9 @@ Optional Sway configuration (replace any existing Print bindings):
 
 ```sway
 bindsym --release Print exec vicinae cmd launch @masterpiece/screen-capture:chooser
-bindsym --release Ctrl+Shift+Print exec vicinae cmd launch @masterpiece/screen-capture:stop
+# Direct supervisor control works without focusing/opening Vicinae.
+bindsym --to-code --no-repeat --inhibited Mod4+Print exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py stop
+bindsym --to-code --no-repeat --inhibited Ctrl+Shift+Print exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py stop
 bindsym --release Shift+Print exec grimshot --notify copy screen
 bindsym --release Shift+Alt+Print exec grimshot --notify copy area
 ```
@@ -34,9 +36,11 @@ bindsym --release Shift+Alt+Print exec grimshot --notify copy area
 | Shortcut | Action |
 | --- | --- |
 | Print | Open horizontal Screenshot / Screencast chooser |
-| Ctrl+Shift+Print | Stop and save recording |
+| Super+Print or Ctrl+Shift+Print | Stop and save recording globally |
 | Shift+Print | Copy all monitors using grimshot |
 | Shift+Alt+Print | Select an area and copy using grimshot |
+
+Repeat the two stop bindings inside any Sway binding modes (such as `mode "resize"`) where you want them available. `--inhibited` keeps them active when remote-desktop/VM apps request shortcut pass-through. Super+Print is the primary stop shortcut; Ctrl+Shift+Print remains an alternative.
 
 You can also search for **Screenshot**, **Record Video**, or **Stop Screen Recording** in Vicinae. A notification announces recording start and completion. Reopening Record Video shows recording state and elapsed time.
 

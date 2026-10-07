@@ -49,7 +49,7 @@ export default function Capture({ mode }: { mode: "screenshot" | "record" }) {
         {format !== "gif" && <Form.Dropdown id="audio" title="Audio" value={audio} onChange={setAudio}>
           <Form.Dropdown.Item value="none" title="No Audio"/><Form.Dropdown.Item value="system" title="System Audio"/><Form.Dropdown.Item value="microphone" title="Microphone"/>
         </Form.Dropdown>}
-        <Form.Description title="Stop recording" text="Open Record Video again and press Enter, or use Stop Screen Recording. On Sway, Ctrl+Shift+Print also stops recording. Window recordings capture a fixed rectangle; keep the window in place."/>
+        <Form.Description title="Stop recording" text="Open Record Video again and press Enter, or use Stop Screen Recording. On Sway, Super+Print (or Ctrl+Shift+Print) stops recording from any window. Window recordings capture a fixed rectangle; keep the window in place."/>
       </>}
       <Form.Dropdown id="delay" title="Delay after selection" value={delay} onChange={setDelay}>
         <Form.Dropdown.Item value="0" title="None"/><Form.Dropdown.Item value="3" title="3 Seconds"/><Form.Dropdown.Item value="5" title="5 Seconds"/><Form.Dropdown.Item value="10" title="10 Seconds"/>
