@@ -8,16 +8,20 @@ GIF-only output is silent and removes the temporary MP4 after successful export.
 
 ## Installation
 
-Requires Node.js 22 or newer, npm, Python 3, and Vicinae. Install the capture tools for your session as listed below, then:
+Install Vicinae and GNU Make first. On Debian/Ubuntu, the Makefile installs the system capture tools, Node.js/npm, Python, GTK feedback libraries, and locked JavaScript dependencies:
 
 ```sh
 git clone https://github.com/masterpiece911/vicinae-screencapture.git
 cd vicinae-screencapture
-npm ci
-npm run build
+make deps
+make install
 ```
 
-Search Vicinae for **Screen Capture**, **Screenshot**, **Record Video**, or **Stop Screen Recording**. Building installs the extension; no server restart is needed.
+Run these commands as your normal user; `make deps` uses sudo only for apt packages. It installs both backends by default. Use `make deps BACKEND=wayland` or `make deps BACKEND=x11` for just one. `make system-deps` and `make npm-deps` are also available separately. Node.js must be version 22 or newer; if your distro provides an older version, upgrade it before proceeding. If apt cannot find a package, refresh its indexes with `sudo apt update` and retry.
+
+On other Linux distributions, install the system tools listed below with your package manager, then run `make npm-deps` and `make install`.
+
+Search Vicinae for **Screen Capture**, **Screenshot**, **Record Video**, or **Stop Screen Recording**. `make install` builds and installs the extension; no server restart is needed. `make build` only creates a bundle in `dist/`.
 
 ## Shortcuts
 
@@ -75,7 +79,7 @@ Capture interfaces follow [maim/slop](https://github.com/naelstrof/maim) and [FF
 
 ## Development
 
-Run `npm ci`, `npm run typecheck`, `npm test`, and `npm run build`. The build installs the extension into Vicinae's user extension directory. To build without installing, run `npm run build -- --out /absolute/path/to/output`.
+Run `make check` for TypeScript checks and Python tests, `make build` for a bundle in `dist/`, and `make install` to build and install into Vicinae. These targets install or refresh npm dependencies automatically when the manifest or lockfile changes. `make help` lists all targets. The underlying `npm run build` command still installs directly through the Vicinae SDK; use `npm run build -- --out /absolute/path/to/output` for a custom build location.
 
 ## Capture feedback
 
