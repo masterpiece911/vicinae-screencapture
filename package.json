@@ -1,0 +1,50 @@
+{
+  "name": "screen-capture",
+  "title": "Screen Capture",
+  "description": "Screenshots and video recording with automatic Wayland/Xorg detection",
+  "categories": [
+    "Productivity"
+  ],
+  "license": "MIT",
+  "author": "masterpiece",
+  "icon": "icon.svg",
+  "commands": [
+    {
+      "name": "screenshot",
+      "title": "Screenshot",
+      "description": "Capture an area, window or monitor on Wayland or Xorg",
+      "mode": "view"
+    },
+    {
+      "name": "video",
+      "title": "Record Video",
+      "description": "Record an area as GIF or MP4; manage and stop the current recording",
+      "mode": "view"
+    },
+    {
+      "name": "stop",
+      "title": "Stop Screen Recording",
+      "description": "Finish and save the current recording",
+      "mode": "no-view"
+    }
+  ],
+  "scripts": {
+    "build": "vici build",
+    "typecheck": "tsc --noEmit",
+    "test": "python3 -m unittest discover -s tests"
+  },
+  "dependencies": {
+    "@vicinae/api": "0.28.2",
+    "react": "19.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "typescript": "^5.9"
+  },
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/masterpiece911/vicinae-screencapture.git"
+  }
+}
