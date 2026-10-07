@@ -17,6 +17,10 @@ spec.loader.exec_module(capture)
 
 class CaptureTests(unittest.TestCase):
     def setUp(self):
+        for name in ('flash', 'open_saved'):
+            helper = patch.object(capture.feedback, name)
+            helper.start()
+            self.addCleanup(helper.stop)
         patcher = patch.object(capture, 'session_type', return_value='wayland')
         patcher.start()
         self.addCleanup(patcher.stop)

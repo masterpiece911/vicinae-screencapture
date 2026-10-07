@@ -31,8 +31,8 @@ bindsym --release --no-repeat XF86AudioMedia exec vicinae cmd launch @masterpiec
 bindsym --no-repeat --inhibited Mod4+XF86AudioMedia exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py stop
 bindsym --to-code --no-repeat --inhibited Mod4+Print exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py stop
 bindsym --to-code --no-repeat --inhibited Ctrl+Shift+Print exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py stop
-bindsym --release Shift+Print exec grimshot --notify copy screen
-bindsym --release Shift+Alt+Print exec grimshot --notify copy area
+bindsym --release Shift+Print exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py screenshot --target screen --destination copy
+bindsym --release Shift+Alt+Print exec python3 ~/.local/share/vicinae/extensions/screen-capture/assets/capture.py screenshot --target area --destination copy
 ```
 
 
@@ -76,3 +76,11 @@ Capture interfaces follow [maim/slop](https://github.com/naelstrof/maim) and [FF
 ## Development
 
 Run `npm ci`, `npm run typecheck`, `npm test`, and `npm run build`. The build installs the extension into Vicinae's user extension directory. To build without installing, run `npm run build -- --out /absolute/path/to/output`.
+
+## Capture feedback
+
+Successful screenshots briefly flash the screen; clipboard-only captures flash too. Recording shows a red, click-through outline instead of flashing at the start. The outline is drawn outside the selected rectangle to keep it out of the recording; edges at the monitor boundary have no room for an outline. A full-monitor recording may therefore have no visible border. The screen flashes after a recording finishes successfully, before GIF conversion.
+
+Saved PNGs, MP4s, and GIFs open with the default desktop application using `xdg-open` (or `gio open` when unavailable). Clipboard-only captures do not open a viewer. GIF-only mode opens only the final GIF; MP4+GIF opens each saved output. Viewer or overlay failures do not delete captures or prevent recording.
+
+Visual feedback needs GTK 3 Python bindings (`python3-gi`, `gir1.2-gtk-3.0`). On Wayland, `gir1.2-gtklayershell-0.1` provides a native overlay. When unavailable, the overlay uses XWayland if `DISPLAY` is available. On Xorg a compositing window manager provides transparency. Install `xdg-utils` for default-app file opening.

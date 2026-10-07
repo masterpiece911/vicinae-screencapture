@@ -16,6 +16,7 @@ import tempfile
 import time
 
 import xorg
+import feedback
 
 RUNTIME = Path(os.environ.get('XDG_RUNTIME_DIR', f'/run/user/{os.getuid()}')) / 'vicinae-screen-capture'
 
@@ -151,6 +152,9 @@ def screenshot(args):
                 result = subprocess.run(clipboard, input=data, stdout=subprocess.DEVNULL, stderr=errors)
             if result.returncode:
                 raise RuntimeError(f'Clipboard failed. Saved file: {saved or "none"}')
+        feedback.flash()
+        if saved:
+            feedback.open_saved(saved)
         notify('Screenshot captured', (str(saved) if saved else 'Copied to clipboard') + (' · copied to clipboard' if saved and args.destination == 'savecopy' else ''))
 
 
@@ -241,6 +245,7 @@ def record(args):
         control = RUNTIME / 'control.sock'
         control.unlink(missing_ok=True)
         child = None
+        outline = None
         phase = 'Selecting'
         started = time.monotonic()
         stop = False
@@ -306,6 +311,15 @@ def record(args):
                 with (RUNTIME / 'recorder.log').open('w') as log:
                     child = subprocess.Popen(command, stdout=log, stderr=log)
                     phase = 'Recording'; started = time.monotonic()
+                    if session == 'wayland':
+                        outline_geometry = geom
+                        if not outline_geometry:
+                            outputs = json.loads(call(['swaymsg', '-t', 'get_outputs', '-r']))
+                            outline_geometry = next((geometry(o['rect']) for o in outputs if o['name'] == output), None)
+                    else:
+                        outline_geometry = xorg.geometry(rect)
+                    if outline_geometry:
+                        outline = feedback.start_outline(outline_geometry)
                     notify('Recording started', 'On Sway, Super+Print stops and saves. Open Record Video in Vicinae for recording controls.')
                     while child.poll() is None and not stop:
                         events(); time.sleep(0.1)
@@ -321,7 +335,11 @@ def record(args):
                 success_codes = (0, 130, -signal.SIGINT) + ((255,) if session == 'x11' and stop else ())
                 if code not in success_codes or not path.exists() or path.stat().st_size == 0:
                     raise RuntimeError(f'Recording failed. Details: {RUNTIME / "recorder.log"}')
+                feedback.stop_outline(outline)
+                outline = None
+                feedback.flash()
                 if not args.gif_only:
+                    feedback.open_saved(path)
                     notify('Recording saved', str(path))
                 if args.gif:
                     phase = 'Exporting GIF'; stop = False
@@ -334,8 +352,10 @@ def record(args):
                         raise RuntimeError('MP4 saved, but GIF export failed: ' + err[-400:])
                     if args.gif_only:
                         path.unlink()
+                    feedback.open_saved(gif)
                     notify('GIF exported', str(gif))
             finally:
+                feedback.stop_outline(outline)
                 if child and child.poll() is None:
                     child.send_signal(signal.SIGINT)
                     try:
